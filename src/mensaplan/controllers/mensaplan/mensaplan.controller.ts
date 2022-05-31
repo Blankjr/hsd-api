@@ -35,7 +35,7 @@ export class MensaplanController {
       this.DOWNLOAD_LOCATION,
     );
   }
-  @Get('food')
+  @Get('all')
   async getFood() {
     return this.mensaplanService.getFood(
       this.DOWNLOAD_LOCATION + '/app_all.xml',
