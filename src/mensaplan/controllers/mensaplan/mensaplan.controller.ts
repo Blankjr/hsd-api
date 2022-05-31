@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { readFileSync } from 'fs';
 import { MensaplanService } from 'src/mensaplan/services/mensaplan/mensaplan.service';
+import { Cron } from '@nestjs/schedule';
 
 @Controller('mensaplan')
 export class MensaplanController {
@@ -28,7 +29,7 @@ export class MensaplanController {
   getTest() {
     return this.mensaplanService.getQuotes();
   }
-  @Get('updatefood')
+  @Cron('0 4,6,8,10 * * 1') // Every Monday at 4:00,  6:00, 8:00AM, 10:00AM
   updateFood() {
     return this.mensaplanService.updateFood(
       this.XML_URL,

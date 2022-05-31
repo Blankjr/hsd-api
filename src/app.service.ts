@@ -1508,15 +1508,29 @@ footer.ty-footer {
   getWelcome(): string {
     return `<style>
     body {
-   color: #b5b4c9;
-   background-color: #141414;
+   color: #dedede;
+   background-color: #363b40;
    text-align: center;
+}
+    a:link, a:visited {
+  background-color: white;
+  color: black;
+  border: 2px solid green;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: green;
+  color: white;
 }
 </style>
 <h1>Hello User</h1>
 <h3>You might take a look at the docs</h3>
 <ul>
-<li><a href="http://167.235.253.185:3000/docs">/docs</li>
+<li><a href="http://167.235.253.185:3000/docs">/docs</a></li>
 </ul>`;
   }
 }
