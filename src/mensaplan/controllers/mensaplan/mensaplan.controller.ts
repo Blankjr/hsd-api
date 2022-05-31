@@ -5,10 +5,7 @@ import {
   HttpStatus,
   Param,
   ParseIntPipe,
-  Req,
-  Res,
 } from '@nestjs/common';
-import { readFileSync } from 'fs';
 import { MensaplanService } from 'src/mensaplan/services/mensaplan/mensaplan.service';
 import { Cron } from '@nestjs/schedule';
 

@@ -59,7 +59,6 @@ export class MensaplanService {
   getFoodToday(downloadLocation) {
     const hsdFiltered = this.baseParse(downloadLocation);
     const now: Date = new Date();
-    // console.log(today.toDateString());
     const today: string = this.dateBuilder(now);
     return hsdFiltered.filter((entry) => entry.DATUM === today);
   }
