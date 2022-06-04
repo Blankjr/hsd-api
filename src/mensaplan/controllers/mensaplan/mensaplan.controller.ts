@@ -15,7 +15,7 @@ export class MensaplanController {
   DOWNLOAD_LOCATION = process.cwd() + '/public/data';
   constructor(private mensaplanService: MensaplanService) {}
 
-  @Get('search/:id')
+  @Get('find/:id')
   getMensaplanById(@Param('id') id: string) {
     const food = this.mensaplanService.findFoodById(
       this.DOWNLOAD_LOCATION + '/app_all.xml',
