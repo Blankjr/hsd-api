@@ -4,7 +4,6 @@ import {
   HttpException,
   HttpStatus,
   Param,
-  ParseIntPipe,
 } from '@nestjs/common';
 import { MensaplanService } from 'src/mensaplan/services/mensaplan/mensaplan.service';
 import { Cron } from '@nestjs/schedule';
@@ -17,14 +16,13 @@ export class MensaplanController {
   constructor(private mensaplanService: MensaplanService) {}
 
   @Get('search/:id')
-  getMensaplanById(@Param('id', ParseIntPipe) id: number) {
-    const food = this.mensaplanService.findFoodById(id);
+  getMensaplanById(@Param('id') id: string) {
+    const food = this.mensaplanService.findFoodById(
+      this.DOWNLOAD_LOCATION + '/app_all.xml',
+      id,
+    );
     if (food) return food;
     else throw new HttpException('Food Not Found!', HttpStatus.BAD_REQUEST);
-  }
-  @Get('test')
-  getTest() {
-    return this.mensaplanService.getQuotes();
   }
   @Cron('0 4,6,8,10 * * 1') // Every Monday at 4:00,  6:00, 8:00AM, 10:00AM
   updateFood() {
@@ -47,8 +45,6 @@ export class MensaplanController {
   }
   @Get('weekday/:weekday')
   async getFoodMonday(@Param('weekday') weekday) {
-    console.log(weekday);
-
     return this.mensaplanService.getFoodWeekday(
       this.DOWNLOAD_LOCATION + '/app_all.xml',
       weekday,
