@@ -24,7 +24,7 @@ export class MensaplanController {
     if (food) return food;
     else throw new HttpException('Food Not Found!', HttpStatus.BAD_REQUEST);
   }
-  @Cron('0 4,6,8,10 * * 1') // Every Monday at 4:00,  6:00, 8:00AM, 10:00AM
+  @Cron('0 4,6,8,10 * * 1-5') // Every Monday-Friday at 4:00,  6:00, 8:00AM, 10:00AM
   updateFood() {
     return this.mensaplanService.updateFood(
       this.XML_URL,
