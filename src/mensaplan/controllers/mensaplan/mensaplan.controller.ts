@@ -31,6 +31,13 @@ export class MensaplanController {
       this.DOWNLOAD_LOCATION,
     );
   }
+  @Get('update')
+  updateFoodManual() {
+    return this.mensaplanService.updateFood(
+      this.XML_URL,
+      this.DOWNLOAD_LOCATION,
+    );
+  }
   @Get('all')
   async getFood() {
     return this.mensaplanService.getFood(
