@@ -3,13 +3,17 @@ import {
   Get,
   HttpException,
   HttpStatus,
+  OnModuleInit,
   Param,
 } from '@nestjs/common';
 import { MensaplanService } from 'src/mensaplan/services/mensaplan/mensaplan.service';
 import { Cron } from '@nestjs/schedule';
 
 @Controller('mensaplan')
-export class MensaplanController {
+export class MensaplanController implements OnModuleInit {
+  onModuleInit() {
+    this.updateFood();
+  }
   XML_URL =
     'https://medien.hs-duesseldorf.de/service/mensaplan/Documents/app_all.xml';
   DOWNLOAD_LOCATION = process.cwd() + '/public/data';
