@@ -8,7 +8,7 @@ export class PruefungsplanController {
   @Get('all')
   async getFood() {
     return this.pruefungsplanService.getAll(
-      this.FILE_LOCATION + '/pruefung.json',
+      this.FILE_LOCATION + '/pruefungsplan.json',
     );
   }
 }
