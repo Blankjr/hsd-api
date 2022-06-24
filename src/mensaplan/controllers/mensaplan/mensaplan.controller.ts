@@ -6,7 +6,7 @@ import {
   OnModuleInit,
   Param,
 } from '@nestjs/common';
-import { MensaplanService } from 'src/mensaplan/services/mensaplan/mensaplan.service';
+import { MensaplanService } from '../../services/mensaplan/mensaplan.service';
 import { Cron } from '@nestjs/schedule';
 
 @Controller('mensaplan')

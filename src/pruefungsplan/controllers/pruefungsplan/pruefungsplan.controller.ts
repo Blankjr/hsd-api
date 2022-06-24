@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { PruefungsplanService } from 'src/pruefungsplan/services/pruefungsplan/pruefungsplan.service';
+import { PruefungsplanService } from './../../services/pruefungsplan/pruefungsplan.service';
 
 @Controller('pruefungsplan')
 export class PruefungsplanController {
