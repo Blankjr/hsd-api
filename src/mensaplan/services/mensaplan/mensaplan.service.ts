@@ -5,13 +5,19 @@ import * as path from 'path';
 import * as fs from 'fs';
 import axios from 'axios';
 
+export interface Meal {
+  DATUM: string;
+  DISPO_ID: string;
+  VERBRAUCHSORT: string;
+}
+
 @Injectable()
 export class MensaplanService {
   constructor(private http: HttpService) {}
 
   // fileUrl: the absolute url of the image or video you want to download
   // downloadFolder: the path of the downloaded file on your machine
-  downloadFile = async (fileUrl, downloadFolder) => {
+  downloadFile = async (fileUrl: string, downloadFolder: string) => {
     // Get the file name
     const fileName = path.basename(fileUrl);
     // The path of the downloaded file on our machine
@@ -31,30 +37,30 @@ export class MensaplanService {
       throw new Error(err);
     }
   };
-  updateFood(xmlUrl, downloadLocation) {
+  updateFood(xmlUrl: string, downloadLocation: string) {
     this.downloadFile(xmlUrl, downloadLocation);
   }
-  getFood(downloadLocation) {
+  getFood(downloadLocation: string) {
     return this.baseParse(downloadLocation);
   }
-  baseParse(downloadLocation) {
+  baseParse(downloadLocation: string) {
     const xmlFile = fs.readFileSync(downloadLocation);
     const json = parser.toJson(xmlFile);
     const locationMensaHSD = '3.530';
     let parsedJSON = JSON.parse(json);
     parsedJSON = parsedJSON.DATAPACKET.ROWDATA.ROW;
     const hsdFiltered = parsedJSON.filter(
-      (entry) => entry.VERBRAUCHSORT == locationMensaHSD,
+      (entry: Meal) => entry.VERBRAUCHSORT == locationMensaHSD,
     );
     return hsdFiltered;
   }
-  getFoodToday(downloadLocation) {
+  getFoodToday(downloadLocation: string) {
     const hsdFiltered = this.baseParse(downloadLocation);
     const now: Date = new Date();
     const today: string = this.dateBuilder(now);
-    return hsdFiltered.filter((entry) => entry.DATUM === today);
+    return hsdFiltered.filter((entry: Meal) => entry.DATUM === today);
   }
-  dateBuilder(now) {
+  dateBuilder(now: Date) {
     const day = now;
     const dd: string = String(day.getDate()).padStart(2, '0');
     const mm: string = String(day.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -62,7 +68,7 @@ export class MensaplanService {
     const date: string = dd + '.' + mm + '.' + yyyy;
     return date;
   }
-  getFoodWeekday(downloadLocation, weekday: string) {
+  getFoodWeekday(downloadLocation: string, weekday: string) {
     const hsdFiltered = this.baseParse(downloadLocation);
     const today: Date = new Date();
     const mondayCalendarDay =
@@ -72,30 +78,27 @@ export class MensaplanService {
       monday.setDate(monday.getDate() + this.weekdayHelper(weekday)),
     );
     const requiredDayString: string = this.dateBuilder(requiredDay);
-    return hsdFiltered.filter((entry) => entry.DATUM === requiredDayString);
+    return hsdFiltered.filter(
+      (entry: Meal) => entry.DATUM === requiredDayString,
+    );
   }
   weekdayHelper(weekday: string): number {
     switch (weekday) {
       case 'tuesday':
         return 1;
-        break;
       case 'wednesday':
         return 2;
-        break;
       case 'thursday':
         return 3;
-        break;
       case 'friday':
         return 4;
-        break;
       default:
         return 0;
-        break;
     }
   }
-  findFoodById(downloadLocation, id: string) {
+  findFoodById(downloadLocation: string, id: string) {
     return this.baseParse(downloadLocation).find(
-      (food) => food.DISPO_ID === id,
+      (food: Meal) => food.DISPO_ID === id,
     );
   }
 }

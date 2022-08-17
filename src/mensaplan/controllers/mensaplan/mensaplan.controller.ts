@@ -16,7 +16,7 @@ export class MensaplanController implements OnModuleInit {
   }
   XML_URL =
     'https://medien.hs-duesseldorf.de/service/mensaplan/Documents/app_all.xml';
-  DOWNLOAD_LOCATION = process.cwd() + '/public/data';
+  DOWNLOAD_LOCATION: string = process.cwd() + '/public/data';
   constructor(private mensaplanService: MensaplanService) {}
 
   @Get('find/:id')
@@ -55,7 +55,7 @@ export class MensaplanController implements OnModuleInit {
     );
   }
   @Get('weekday/:weekday')
-  async getFoodMonday(@Param('weekday') weekday) {
+  async getFoodWeekday(@Param('weekday') weekday: string) {
     return this.mensaplanService.getFoodWeekday(
       this.DOWNLOAD_LOCATION + '/app_all.xml',
       weekday,

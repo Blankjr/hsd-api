@@ -1,9 +1,0 @@
-version: '3.9'
-
-# For local testing and development only
-# Builds NestJS Docker Container into /rest directory and binds container port to OS port
-services:
-  rest:
-    build: .
-    ports:
-      - '3000:3000'

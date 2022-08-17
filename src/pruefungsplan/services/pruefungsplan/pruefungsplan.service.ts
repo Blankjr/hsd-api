@@ -1,15 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import * as fs from 'fs';
+import * as csvToJson from 'convert-csv-to-json';
 @Injectable()
 export class PruefungsplanService {
-  getAll(csvFile) {
-    // return 'csv received';
-    return this.baseParse(csvFile);
+  async loadData(jsonLocation: string, csvLocation: string) {
+    try {
+      if (!fs.existsSync(jsonLocation))
+        csvToJson
+          .latin1Encoding()
+          .generateJsonFileFromCsv(csvLocation, jsonLocation);
+    } catch (err) {
+      console.error(err);
+    }
   }
-  baseParse(downloadLocation) {
-    const csvFile = fs.readFileSync(downloadLocation);
-    // const obj = JSON.parse(csvFile);
-    console.log(csvFile.toString());
-    return csvFile.toString();
+
+  async getData(jsonLocation: string) {
+    try {
+      return fs.existsSync(jsonLocation) ? this.baseParse(jsonLocation) : null;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  private baseParse(jsonLocation: string) {
+    const jsonObject = fs.readFileSync(jsonLocation);
+    return jsonObject.toString();
   }
 }

@@ -1,13 +1,16 @@
-FROM node:16-alpine
+FROM node:latest
 
-WORKDIR /rest
+WORKDIR /app
 
-ADD package.json /rest/package.json
+ARG NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV}
 
-RUN npm install
+COPY package*.json ./
+RUN npm ci --omit=dev
+COPY . .
 
-ADD . /rest
+COPY /dist /app/dist
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start"]
+CMD ["node", "dist/main"]
