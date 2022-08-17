@@ -6,7 +6,6 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "style:check": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -22,8 +21,6 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "prepare": "cd .. && husky install server/.husky",
-    "precommit": "lint-staged"
   },
   "dependencies": {
     "@nestjs/axios": "^0.0.8",
